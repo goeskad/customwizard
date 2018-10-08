@@ -1,2 +1,11 @@
-# customwizard
-一个Meta-data驱动的UI开发框架，使用XForm作为meta-data文件格式，能够简单清晰的定义UI元素，布局和事件，并且能够使用css。基于这个框架，开发和维护UI程序都十分便捷：事件逻辑从UI中分离，能够轻松的重用和扩展；UI由XML描叙，我们可以通过简单的复制粘贴然后再修改的方式创建一个类似的UI.
+## customwizard
+基础UI框架
+
+## configtool
+基于customwizard的服务于ActiveMatrix产品族的配置管理向导UI框架，在原本的基础上添加了一下常用配置actions和utils.
+
+## tct.admin
+configtool在ActiveMatrix其中admin上的应用
+
+## ert
+Enterprise Replication Tool, 基于customwizard的数据复制应用
