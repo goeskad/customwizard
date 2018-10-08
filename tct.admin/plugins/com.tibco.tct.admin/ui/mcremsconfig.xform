@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <reset />
+        <action id="usedefaultaction" className="com.tibco.tct.amx.actions.UseDefaultEMSAction" controlId="emsconfig" 
+	        copyFromPrefix="/admin/emsconfig" copyToPrefix="/admin/mcrinfo/emsconfig" />
+		<action id="sslaction" className="com.tibco.tct.framework.actions.VisibleAction" optionControlId="sslcontrol" controlId="sslgroup" />
+    	<action id="setFileFilter" className="com.tibco.tct.framework.actions.SetFileFilterAction" fileTypeControl="keystoretype" fileChooserControl="keystorelocation" />
+
+	</preaction>
+
+    <body ref="/admin/mcrinfo">
+        <group ref="emsconfig" style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+            <trigger id="optioncontrol" class="checkbox" ref="usedefault">
+		<label>Use ActiveMatrix Administrator Notification and Messaging Bus Server</label>
+		<action refid="usedefaultaction" event="click" />
+	    </trigger>
+	</group>
+     	<group id="emsconfig" ref="emsconfig" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <input id="hostportlist" ref="hostportlist" hint="comma separated list of host:port of notification server instances">
+		<label>Host Port List:</label>
+		<validator className="com.tibco.tct.framework.actions.HostPortListValidator"/>
+	    </input>
+	    <input id="username" ref="username">
+		<label>Username:</label>
+		<validator validation="nonempty" />
+	    </input>
+	    <input id="password" class="password" ref="password" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+		<label>Password:</label>
+	    </input>
+	    <trigger id="sslcontrol" class="checkbox" ref="enablessl">
+	        <label>TIBCO Enterprise Message Service server is SSL enabled. Specify a trust store to establish trust with this server.</label>
+	        <action refid="sslaction" event="click"  />
+	    </trigger>
+	    <group id="sslgroup" style="colspan: 2; layout: grid; layout-cols: 1; align: fill; hgrab: true; disable: true;">
+	        <label>SSL Keystore Configuration</label>
+		<group style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+		    <trigger>
+		        <label>Create a Trust Store...</label>
+		        <action className="com.tibco.tct.amx.actions.OpenSSLWizardAction" keyStorePrefix="/admin/mcrinfo/emsconfig" serverControlId="hostportlist" serverType="hostportlist" />
+	            </trigger>
+		    <output style="colspan: 2;">or Upload a trust store keystore file:</output>
+                </group>
+		<group ref="/admin/mcrinfo/emsconfig" style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	            <input id="keystorelocation" ref="keystorelocation" class="filechooser" browseType="file">
+                        <label>Keystore Location:</label>
+		        <validator validation="nonempty,exist" />
+                    </input>
+			<select1 id="keystoretype" appearance="minimal" ref="keystoretype"
+				style="colspan: 2; border: true; align: fill; hgrab: true;">
+				<label>Keystore Type:</label>
+				<item>
+					<value>JCEKS</value>
+				</item>
+				<item>
+					<value>JKS</value>
+				</item>
+				<action refid="setFileFilter" event="DOMFocusOut"/>
+			</select1>
+		    <input id="keystorepassword" ref="keystorepassword" style="control: password; colspan: 2; border: true; align: fill; hgrab: true;" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+		        <label>Keystore Password:</label>
+		        <validator validation="nonempty" />
+	            </input>
+		</group>
+	    </group>
+	    <trigger>
+		<label>Test Connection</label>
+		<action className="com.tibco.tct.amx.actions.TestEMSConnectionAction" />
+	    </trigger>
+	</group>
+    </body>
+</xform>

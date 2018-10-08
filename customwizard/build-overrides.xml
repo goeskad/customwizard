@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TIBCO Builder: Overrides">
+
+    <!-- Each Release Unit should change the project name above and the two
+         property definitions below. -->
+    <property name="release-unit" value="customwizard" />
+    <property name="feature" value="com.tibco.customwizard.feature" />
+
+    <!-- The repository name is only used to separate release unit configurations,
+         preventing confusion of thirdparty common with neo common, for instance. -->
+    <property name="autobuild.repository" value="amxext" />
+    <property name="autobuild.svn.tags-suffix"  value="/tools" />
+
+    <property name="autobuild.obfuscator.style" value="package" />
+
+    <property name="autobuild.version.eclipse"
+              value="3.4" />
+
+    <property name="site.type" value="debug"/>
+    <condition property="reldist.update.site"
+        value="http://reldist.na.tibco.com:${autobuild.spin.port}/reldist/${site.type}"
+        else="http://reldist.na.tibco.com/reldist/${site.type}">
+        <isset property="autobuild.spin.port" />
+    </condition>
+
+    <updatesites id="autobuild.workspace.update-sites.list">
+        <updatesite url="${reldist.update.site}"/>
+    </updatesites>
+
+    <import file="${autobuild.dir.user}/amf-tools/build-overrides.xml" optional="true" />
+</project>

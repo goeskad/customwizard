@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="FILE"/>
+    </appender>
+    
+   <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+     <param name="File" value="{0}"/>
+     <param name="Append" value="true"/>
+     <!--
+     <layout class="com.tibco.commonlogging.appender.BEF2CBELayout"/>
+     -->
+      <layout class="com.tibco.tpcl.org.apache.log4j.PatternLayoutEx">
+        <param name="ConversionPattern" value="%R{_cl.physicalCompId.matrix.env} %R{_cl.physicalCompId.matrix.node} %d{dd MMM yyyy HH:mm:ss,SSS} [%t] [%-5p] %c - %m%n"/>
+      </layout>
+  </appender>
+  
+    <!-- to be removed in production -->
+    <logger name="com.tibco">
+        <level value="debug"/> 
+    </logger>
+  
+    <logger name="com.tibco.neo">
+        <level value="info"/> 
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="warn"/>
+    </logger>
+
+    <logger name="org.mortbay">
+        <level value="warn"/>
+    </logger>
+
+    <logger name="com.tibco.amf.hpa.core.common.util">
+        <level value="info"/> 
+    </logger>
+
+    <logger name="org.eclipse.emf">
+        <level value="warn"/>
+    </logger>    
+
+    <logger name="com.tibco.amf.admin.server.AmxHibernateTransactionManager">
+        <level value="info"/>
+    </logger>    
+    
+    <logger name="com.tibco.amf.admin.api.amx.application.impl">
+        <level value="info"/>
+    </logger>    
+
+    <logger name="com.tibco.amx.hpa">
+        <level value="debug"/>
+    </logger>
+
+    <logger name="com.tibco.amx.hpa.provisioning">
+        <level value="debug"/>
+    </logger>
+    
+    <logger name="com.tibco.amx.hpa.provisioning.hook">
+        <level value="debug"/>
+    </logger>
+
+    <logger name="com.tibco.amx.hpa.provisioning.hook.EventHook">
+        <level value="debug"/>
+    </logger>
+
+    <logger name="com.tibco.amx.hpa.provisioning.hook.FindHook">
+        <level value="debug"/>
+    </logger>
+    
+    <root>
+        <priority value ="info" /> 
+        <appender-ref ref="ASYNC"/>
+     </root>
+</log4j:configuration>

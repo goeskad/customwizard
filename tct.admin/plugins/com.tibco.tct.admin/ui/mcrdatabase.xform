@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <action className="com.tibco.tct.amx.actions.LoadDBVendorAction" />
+		<reset />
+        <action id="usedefaultaction" className="com.tibco.tct.amx.actions.UseDefaultDBAction" controlId="database" 
+	        copyFromPrefix="/admin/database" copyToPrefix="/admin/mcrinfo/database" />
+		<action id="sslaction" className="com.tibco.tct.framework.actions.VisibleAction" optionControlId="sslcontrol" controlId="sslgroup" />
+		<action id="setFileFilter" className="com.tibco.tct.framework.actions.SetFileFilterAction" fileTypeControl="keystoretype" fileChooserControl="keystorelocation" />
+    
+    </preaction>
+
+    <body ref="/admin/mcrinfo">
+        <group ref="database" style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+            <trigger id="optioncontrol" class="checkbox" ref="usedefault">
+		<label>Use ActiveMatrix Administrator Server Database</label>
+		<action refid="usedefaultaction" event="click" />
+	    </trigger>
+	</group>
+     	<group id="database" ref="database" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <select1 id="vendor" appearance="minimal" ref="vendor">
+                <label>Database Driver:</label>
+		<action className="com.tibco.tct.amx.actions.ChooseDBAction" event="xforms-value-changed" />
+            </select1>
+	    <input id="url" ref="url">
+		<label>Database URL:</label>
+		<validator className="com.tibco.tct.amx.actions.DBUrlValidator" />
+	    </input>
+	    <input id="username" ref="username">
+		<label>Username:</label>
+		<validator validation="nonempty" />
+	    </input>
+	    <input id="password" class="password" ref="password" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+		<label>Password:</label>
+	    </input>
+	    <input id="maxconnections" ref="maxconnections">
+		<label>Max Connections:</label>
+		<validator validation="nonempty,number" />
+	    </input>
+	    <trigger id="sslcontrol" class="checkbox" ref="enablessl">
+	        <label>Database server is SSL enabled. Specify a trust store to establish trust with this server.</label>
+	        <action refid="sslaction" event="click"  />
+	    </trigger>
+	    <group id="sslgroup" style="colspan: 2; layout: grid; layout-cols: 1; align: fill; hgrab: true; disable: true;">
+	        <label>SSL Keystore Configuration</label>
+		<group style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+		    <trigger>
+		        <label>Create a Trust Store...</label>
+		        <action className="com.tibco.tct.amx.actions.OpenSSLWizardAction" keyStorePrefix="/admin/mcrinfo/database" />
+	            </trigger>
+		    <output style="colspan: 2;">or Upload a trust store keystore file:</output>
+                </group>
+		<group ref="/admin/mcrinfo/database" style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	            <input id="keystorelocation" ref="keystorelocation" class="filechooser" browseType="file">
+                        <label>Keystore Location:</label>
+		        <validator validation="nonempty,exist" />
+                    </input>
+			<select1 id="keystoretype" appearance="minimal" ref="keystoretype"
+				style="colspan: 2; border: true; align: fill; hgrab: true;">
+				<label>Keystore Type:</label>
+				<item>
+					<value>JCEKS</value>
+				</item>
+				<item>
+					<value>JKS</value>
+				</item>
+				<action refid="setFileFilter" event="DOMFocusOut"/>
+			</select1>
+		    <input id="keystorepassword" ref="keystorepassword" style="control: password; colspan: 2; border: true; align: fill; hgrab: true;" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+		        <label>Keystore Password:</label>
+		        <validator validation="nonempty" />
+	            </input>
+		</group>
+	    </group>
+	    <trigger>
+		<label>Test Connection</label>
+		<action className="com.tibco.tct.amx.actions.TestDBConnectionAction" />
+	    </trigger>
+	</group>
+    </body>
+</xform>

@@ -1,0 +1,88 @@
+
+body {
+    control: composite;
+    layout: grid;
+    layout-padding: 0;
+    layout-spacing: 0;
+    layout-cols: 1;
+    hgrab: true;
+    align: fill;
+    vgrab: true;
+    valign: fill;
+}
+
+
+group {
+    layout: grid;
+    layout-padding: 0;
+    layout-spacing: 0;
+    layout-cols: 1;
+    hgrab: true;
+    align: fill;
+    vgrab: true;
+    valign: fill;
+}
+
+input {
+    hgrab: true;
+    align: fill;
+    border: true;
+}
+
+textarea {
+    hgrab: true;
+    align: fill;
+    border: true;
+    height: 200;
+    vscroll: true;
+    hscroll: true;
+}
+
+password {
+    hgrab: true;
+    align: fill;
+    border: true;
+}
+
+select {
+    hgrab: true;
+    align: fill;
+    border: true;
+}
+
+select1 {
+    hgrab: true;
+    align: fill;
+    border: true;
+}
+
+trigger {
+}
+
+submit {
+}
+
+
+label {
+    align: left;
+}
+
+.filechooser {
+    control: filechooser;
+    hgrab: true;
+    align: fill;
+    border: true;
+	readOnly: true;
+}
+
+.password {
+    control: password;
+    hgrab: true;
+    align: fill;
+    border: true;
+}
+
+.checkbox {
+    control: check;
+	colspan: 2;
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.tibco.tct.admin.feature"
+      label="%featureName"
+      version="1.3.0.qualifier"
+      provider-name="%providerName_notrans">
+
+   <description url="http://www.tibco.com/devnet/business_studio/default.jsp">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="com.tibco.tct.amx.feature" version="1.2.0"/>
+       <import feature="com.tibco.trinity.server.credentialserver.common.feature" version="1.3.0"/>
+   </requires>
+
+   <plugin
+         id="com.tibco.tct.admin"
+         download-size="0"
+         install-size="0"
+         version="1.3.0.qualifier"
+         unpack="true"/>
+   
+</feature>

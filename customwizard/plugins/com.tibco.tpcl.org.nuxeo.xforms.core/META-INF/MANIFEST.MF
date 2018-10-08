@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: X-Forms for Eclipse Plug-in
+Bundle-ClassPath: org.nuxeo.xforms.core.jar
+Bundle-SymbolicName: com.tibco.tpcl.org.nuxeo.xforms.core
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.nuxeo.xforms.Activator
+Bundle-Vendor: Nuxeo
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime
+Eclipse-LazyStart: true
+Export-Package: org.nuxeo.xforms,
+ org.nuxeo.xforms.stylesheet,
+ org.nuxeo.xforms.ui,
+ org.nuxeo.xforms.xforms,
+ org.nuxeo.xforms.xforms.events,
+ org.nuxeo.xforms.xforms.factories,
+ org.nuxeo.xforms.xforms.handlers,
+ org.nuxeo.xforms.xforms.model,
+ org.nuxeo.xforms.xforms.model.actions,
+ org.nuxeo.xforms.xforms.model.controls,
+ org.nuxeo.xforms.xml,
+ org.nuxeo.xforms.xsd,
+ org.nuxeo.xforms.xsd.factories,
+ org.nuxeo.xforms.xsd.model,
+ org.nuxeo.xforms.xsd.model.constraints,
+ org.nuxeo.xforms.xsd.model.types

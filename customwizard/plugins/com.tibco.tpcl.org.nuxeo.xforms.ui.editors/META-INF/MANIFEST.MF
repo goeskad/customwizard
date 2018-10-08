@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XForms Editor Plug-in
+Bundle-ClassPath: org.nuxeo.xforms.ui.editors.jar
+Bundle-SymbolicName: com.tibco.tpcl.org.nuxeo.xforms.ui.editors;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.nuxeo.xforms.ui.editors.Activator
+Bundle-Vendor: Nuxeo
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.tibco.tpcl.org.nuxeo.xforms.core,
+ com.tibco.tpcl.org.nuxeo.xforms.ui
+Eclipse-LazyStart: true

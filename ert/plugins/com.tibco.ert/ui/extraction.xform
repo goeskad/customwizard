@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+   <link rel="StyleSheet" type="text/css" href="default.css"/>
+   
+   <body>
+	   <group style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	       <label>Source amx admin information</label>
+	       <input ref="/ert/source/host" hint="The host name of the source enterprise">
+		   <label>Host</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <input ref="/ert/source/port" hint="The http port of the source enterprise">
+		   <label>Port</label>
+		   <validator validation="nonempty,number" />
+	       </input>
+	       <input ref="/ert/source/username" hint="The user nam of the source enterprise">
+		   <label>User Name</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <input class="password" ref="/ert/source/password" obfuscatorClass="com.tibco.ert.ui.customwizard.CWPasswordObfuscator" hint="The password of the source enterprise">
+		   <label>Password</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <input class="password" ref="/ert/source/dbpassword" obfuscatorClass="com.tibco.ert.ui.customwizard.CWPasswordObfuscator" hint="The database password of the source enterprise">
+		   <label>Db Password</label>
+	       </input>
+	   </group>
+	   <group style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+               <label>Extraction setting</label>
+	       <input ref="/ert/extraction/target" hint="The target objects which you want to extract. e.g. * for all the objects or Environment/ServiceAssembly[@name=&quot;sa_name&quot;] for a specified ServiceAssembly">
+		   <label>Extraction target</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <trigger class="checkbox" ref="/ert/extraction/repeat" hint="Repeat to extract source environment information">
+		   <label>Repeat</label>
+	       </trigger>
+	       <input ref="/ert/extraction/interval" hint="&quot;interval&quot; minutes of extraction">
+		   <label>Interval (mins)</label>
+		   <validator validation="number" />
+	       </input>
+	   </group>
+	   <group style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+	       <trigger hint="Click this button to start extraction">
+		   <label>Extract</label>
+		   <action className="com.tibco.ert.ui.actions.ExtractAction" />
+	       </trigger>
+	   </group>
+    </body>
+</xform>

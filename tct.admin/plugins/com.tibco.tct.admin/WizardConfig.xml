@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard sequence="100" width="600" height="420" title="Create TIBCO ActiveMatrix Administrator Server - V${amx.version}" description="This wizard will help you to create an ActiveMatrix Administrator server and TIBCO Host instance&#x0a;allowing you to specify all configuration options." icon="ui/icons/menu.png">
+    <classloaderfactory className="com.tibco.customwizard.internal.support.URLClassLoaderFactory">
+        <file path="tct-admin.jar" />
+	</classloaderfactory>
+
+    <datamodel file="data.xml" loader="com.tibco.tct.admin.AdminDataModelLoader" />
+
+    <postaction>
+        <action className="com.tibco.tct.framework.actions.CLIAction" logFileName="create.admin.log" targetName="admin-full-setup" description="Create TIBCO ActiveMatrix Administrator server" />
+		<action className="com.tibco.tct.admin.AdminSetDefaultHttpsAction" keyPrefix="/admin/serverconnsetting" trustStrorePrefix="truststore" visible="false" />
+		<action className="com.tibco.tct.framework.actions.CLIAction" logFileName="create.mcr.log" targetName="deploy-mcr" description="Deploy Monitoring Service" />
+		<action className="com.tibco.tct.framework.actions.CLIAction" logFileName="create.commonlogging.log" targetName="deploy-commonlogging" description="Deploy Log Service" />
+	</postaction>
+
+	<pagegroup id="part1">
+		<page id="welcome" title="TIBCO ActiveMatrix Administrator Server Creation Wizard" description="Welcome to the TIBCO ActiveMatrix Administrator server creation wizard." referenceFile="ui/welcome.xform" />
+		<page id="baseinfo" title="Administrator Server Configuration: Details" description="Enter configuration details for the ActiveMatrix Administrator server." referenceFile="ui/baseinfo.xform" />
+	</pagegroup>
+    
+	<pagegroup id="security" visible="false">
+	    <page id="credentialservice" title="Administrator Server Configuration: Credential Server Details" description="Enter configuration details for the TIBCO Credential Server." referenceFile="ui/credentialservice.xform" />
+        <page id="credentialkeystore" title="Administrator Server Configuration: Credential Server Keystore" description="Enter configuration details for the TIBCO Credential Server keystore." referenceFile="ui/credentialkeystore.xform" />
+	</pagegroup>
+
+    <pagegroup id="part2" visible="false">
+        <page id="tibcohost" title="Administrator Server Configuration: TIBCO Host Configuration" description="Enter configuration details for the TIBCO Host instance that manages the ActiveMatrix node&#x0a;on which the ActiveMatrix Administrator server will run." referenceFile="ui/tibcohost.xform" />
+		<page id="serverconnsetting" title="Administrator Server Configuration: Connection Settings" description="Enter connection settings for the ActiveMatrix Administrator server." referenceFile="ui/serverconnsetting.xform" />
+		<page id="internalhttp" title="Administrator Server Configuration: Internal HTTP Settings" description="Enter configuration details for the internal HTTP port&#x0a; used by host and nodes to download artifacts from Administrator." referenceFile="ui/internalhttp.xform" />
+		<page id="emsconfig" title="Administrator Server Configuration: Notification and Messaging Bus Server" description="Enter configuration details of the TIBCO Enterprise Message Service server&#x0a;that will be used by the ActiveMatrix Administrator server to deliver notifications and messages." referenceFile="ui/emsconfig.xform" />
+		<page id="admindatabase" title="Administrator Server Configuration: Database Details" description="Enter configuration details for the ActiveMatrix Administrator database." referenceFile="ui/admindatabase.xform" />
+        <page id="chooserealm" title="Administrator Server Configuration: Authentication Realm" description="Enter configuration details for the ActiveMatrix Administrator authentication realm." referenceFile="ui/chooserealm.xform" />
+	</pagegroup>
+
+	<pagegroup id="dbrealm" visible="false">
+        <page id="dbrealm1" title="Administrator Server Configuration: Database Authentication Realm Details" description="Enter configuration details for the database authentication realm." referenceFile="ui/dbrealm1.xform" />
+	</pagegroup>
+
+    <pagegroup id="ldaprealm" visible="false">
+        <page id="ldaprealm1" title="Administrator Server Configuration: LDAP Authentication Realm Details" description="Enter configuration details for the LDAP authentication realm." referenceFile="ui/ldaprealm1.xform" />
+		<page id="ldaprealm2" title="Administrator Server Configuration: LDAP Authentication Realm Details" description="Enter configuration details for the LDAP authentication realm." referenceFile="ui/ldaprealm2.xform" />
+		<page id="ldaprealm3" title="Administrator Server Configuration: LDAP Authentication Realm Details" description="Enter configuration details for the LDAP authentication realm." referenceFile="ui/ldaprealm3.xform" />
+	</pagegroup>
+
+	<pagegroup id="part3" visible="false">
+	    <page id="mcremsconfig" title="Administrator Server Configuration: Monitoring Notification Server" description="Enter configuration details for the TIBCO Enterprise Message Service server&#x0a;that will deliver performance statistics." referenceFile="ui/mcremsconfig.xform" />
+		<page id="mcrdatabase" title="Administrator Server Configuration: Monitoring Database Configuration" description="Enter configuration details for the database used to store ActiveMatrix&#x0a;performance statistics." referenceFile="ui/mcrdatabase.xform" />
+		<page id="mcrgeneralconfig" title="Administrator Server Configuration: Monitoring Configuration" description="Enter details for the configuration of performance statistics.  Basic Monitoring is always enabled." referenceFile="ui/mcrgeneralconfig.xform" />
+        <page id="logsrvdatabase" title="Administrator Server Configuration: Log Service Database Configuration" description="Enter configuration details for the database that will be used by the default log service." referenceFile="ui/logsrvdatabase.xform" />
+        <page id="payloadsrvdatabase" title="Administrator Server Configuration: Payload Service Database Configuration" description="Enter configuration details for the database that will be used by the default payload service." referenceFile="ui/payloadsrvdatabase.xform" />
+		<page id="summary" title="Administrator Server Configuration: Summary" description="Review the Administrator server configuration summary. After you click Configure, the wizard takes 15 minutes or more to complete depending on the configuration options." referenceFile="ui/summary.xform" />
+	</pagegroup>
+</wizard>

@@ -1,0 +1,18 @@
+<project name="ert" default="extract">
+    <dirname property="ert.scripts.dir" file="${ant.file.ert}"/>
+
+    <property name="ert.home" value="${ert.scripts.dir}/.." />
+    <property name="config.file" value="${ert.home}/data.xml" />
+
+    <target name="-init">
+        <taskdef name="ReadDataXMLTask" classname="com.tibco.ert.model.ant.ReadDataXMLTask" classpath="${ert.home}/ert.jar" loaderref="ert.loader" />
+        <ReadDataXMLTask dataFile="${config.file}" />
+
+        <taskdef name="DefineERTTask" classname="com.tibco.ert.model.ant.DefineERTTask" loaderref="ert.loader" />
+		<DefineERTTask />
+	</target>
+
+    <target name="extract" depends="-init" description="Extract the environments setting">
+        <ExtractTask />
+	</target>
+</project>

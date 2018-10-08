@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <action className="com.tibco.tct.framework.actions.CheckNTService" />
+        <action id="visibleaction" className="com.tibco.tct.framework.actions.VisibleAction" controlId="nodesetting" />
+    </preaction>
+
+    <body ref="/admin">
+     	<group ref="tibcohost" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <input ref="host">
+		<label>Machine Name:</label>
+		<validator className="com.tibco.tct.framework.actions.HostNameValidator" />
+	    </input>
+	    <input ref="port">
+		<label>Port:</label>
+		<validator className="com.tibco.tct.framework.actions.PortNumValidator" />
+	    </input>
+	    <trigger id="registerservice" class="checkbox" ref="registerservice">
+		<label>Register as Windows Service</label>
+		<action className="com.tibco.tct.framework.actions.CheckUACAction" event="click" />
+	    </trigger>
+	    <trigger id="shortcut" class="checkbox" ref="shortcut">
+		<label>Create Windows Shortcut</label>
+	    </trigger>
+	</group>
+	<group ref="tibcohost" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+            <trigger id="optioncontrol" class="checkbox" ref="createnode">
+		<label>Create Development Node</label>
+		<action refid="visibleaction" event="click"  />
+	    </trigger>
+	    <group id="nodesetting" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	        <input ref="/admin/tibcohost/envname">
+		    <label>Environment Name:</label>
+		    <validator className="com.tibco.tct.admin.EnvNodeNameValidator" />
+	        </input>
+		<input ref="/admin/tibcohost/nodename">
+		    <label>Node Name:</label>
+		    <validator className="com.tibco.tct.admin.EnvNodeNameValidator" />
+	        </input>
+                <input ref="/admin/tibcohost/nodeport">
+		    <label>Node Management Port:</label>
+		    <validator className="com.tibco.tct.framework.actions.PortNumValidator" />
+	        </input>
+	    </group>
+	</group>
+    </body>
+</xform>

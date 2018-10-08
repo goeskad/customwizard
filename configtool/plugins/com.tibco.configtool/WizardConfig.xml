@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard width="600" height="420" title="TIBCO Configuration Tool" description="Create new configurations" icon="icons/product.png">
+	<classloaderfactory className="com.tibco.customwizard.internal.support.URLClassLoaderFactory">
+		<file path="tct.jar" />
+		<file path="${java.home}/lib/ext/ibmjceprovider.jar" />
+		<file path="${java.home}/lib/ext/sunjce_provider.jar" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.security.tibcrypt" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.jms.jmsclient" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.jms.jmsclient.admin" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.javax.jms" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.trinity.*" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.atlas.auth.realm.*" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.org.apache.harmony.asn1" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.javax.resource" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.org.apache.xalan" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.org.apache.xml.serializer" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.org.opensaml" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.org.joda.time" />
+		<plugin dir="${tibco.home}/components/shared/1.0.0/plugins" pluginId="com.tibco.tpcl.org.objectweb.asm" />
+		<file dir="${tibco.home}/tools/lib" pattern=".*\.jar" />
+	</classloaderfactory>
+
+	<wizardprocessor className="com.tibco.configtool.internal.ConfigToolProcessor" />
+</wizard>

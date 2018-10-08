@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <postaction>
+        <action className="com.tibco.tct.admin.SetPageFlowAction" />
+    </postaction>
+
+    <body ref="/admin">
+     	<group ref="authenticationrealm" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <label>Authentication Realm</label>
+	    <select1 appearance="minimal" ref="type">
+                <label>Realm Type:</label>
+                <item><label>Database</label><value>dbrealm</value></item>
+                <item><label>LDAP</label><value>ldaprealm</value></item>
+            </select1>
+	</group>
+	<group ref="authenticationrealm" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+            <label>Superuser Credentials</label>
+	    <output style="colspan: 2; align: fill; hgrab: true;">For LDAP, ensure that this user exists in your LDAP server.</output>
+	    <input ref="username" hint="Superuser's username">
+		<label>Username:</label>
+		<validator validation="nonempty" />
+	    </input>
+	    <input id="password" class="password" ref="password" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+		<label>Password:</label>
+		<validator validation="nonempty" />
+	    </input>
+	    <input class="confirmpassword" controlId="password" errorMessage="Confirm password must match password">
+		<label>Confirm Password:</label>
+		<validator validation="nonempty" />
+	    </input>
+	</group>
+    </body>
+</xform>

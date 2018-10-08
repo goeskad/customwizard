@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <action className="com.tibco.configtool.sslwizard.SetCAListAction" />
+    </preaction>
+
+    <body>
+        <output>
+The following server certificates were retrieved. Please review and choose the ones you decide to trust.
+If you choose to trust a CA certificate, then all valid chains originating from that anchor will be trusted.
+        </output>
+	<group style="layout: grid; layout-cols: 2; fillboth: true;">
+            <group style="layout: grid; layout-cols: 1; fillboth: true; width: 150; height: 260;">
+	        <label>Trust selected certificates</label>
+                <group id="cagroup" style="control: scroll; layout: grid; layout-cols: 1; fillboth: true; hscroll: true; vscroll: true; ">
+	        </group>
+            </group>
+	    <group style="layout: grid; layout-cols: 1; fillboth: true; width: 300;">
+	        <label>Certificate details</label>
+	        <textarea id="details" style="readOnly: true; vscroll: true; hscroll: true; fillboth: true;" />
+            </group>
+	</group>
+    </body>
+</xform>

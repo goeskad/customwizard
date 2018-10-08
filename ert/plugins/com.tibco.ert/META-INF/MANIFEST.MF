@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ert
+Bundle-SymbolicName: com.tibco.ert; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ com.tibco.tpcl.org.nuxeo.xforms.core,
+ com.tibco.tpcl.org.nuxeo.xforms.ui,
+ com.tibco.customwizard,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.forms,
+ org.apache.ant,
+ com.tibco.tpcl.org.jdom,
+ com.tibco.tpcl.org.apache.commons.httpclient,
+ com.tibco.tpcl.org.apache.commons.logging.over.slf4j,
+ com.tibco.tpcl.org.apache.xmlbeans,
+ com.tibco.tpcl.org.codehaus.xfire.core,
+ com.tibco.tpcl.org.codehaus.xfire.xmlbeans,
+ com.tibco.tpcl.org.codehaus.xfire.annotations,
+ com.tibco.tpcl.org.codehaus.xfire.aegis,
+ com.tibco.tpcl.org.codehaus.xfire.java5,
+ com.tibco.security.tibcrypt,
+ com.tibco.matrix.administration.services.schema,
+ com.tibco.commonlogging.logserviceconfig.schema,
+ com.tibco.matrix.administration.command.line
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

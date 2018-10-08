@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ERT Overrides">
+
+    <!-- Each Release Unit should change the project name above and the two
+         property definitions below. -->
+    <property name="release-unit" value="ert" />
+    <property name="feature" value="com.tibco.ert.feature" />
+
+    <!-- The repository name is only used to separate release unit configurations,
+         preventing confusion of thirdparty common with neo common, for instance. -->
+    <property name="autobuild.repository" value="devtools" />
+
+    <property name="autobuild.obfuscator.style" value="none" /> 
+
+    <property name="autobuild.version.eclipse"
+              value="3.2" />
+    
+</project>

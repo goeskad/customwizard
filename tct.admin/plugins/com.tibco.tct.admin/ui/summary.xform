@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+    
+    <preaction>
+        <action className="com.tibco.tct.admin.AdminSummaryPagePreAction" />
+    </preaction>
+
+    <postaction>
+        <action className="com.tibco.tct.framework.actions.CheckSavedDataModelAction" />
+        <action className="com.tibco.tct.amx.actions.PostCheckEMSConnectionAction"																										pageId="emsconfig" />
+        <action className="com.tibco.tct.amx.actions.PostCheckDBConnectionAction"	keys="/admin/database/usedefault"																	pageId="admindatabase" />
+        <action className="com.tibco.tct.amx.actions.PostCheckDBConnectionAction"	keys="/admin/authenticationrealm/type,/admin/dbrealm/usedefault"	expectedValues="dbrealm,false"	pageId="dbrealm1" />
+        <action className="com.tibco.tct.admin.PostCheckLDAPConnectionAction"		keys="/admin/authenticationrealm/type"								expectedValues="ldaprealm" />
+        <action className="com.tibco.tct.amx.actions.PostCheckEMSConnectionAction"	keys="/admin/mcrinfo/emsconfig/usedefault"							expectedValues="false"			pageId="mcremsconfig"/>
+        <action className="com.tibco.tct.amx.actions.PostCheckDBConnectionAction"	keys="/admin/mcrinfo/database/usedefault"															pageId="mcrdatabase"/>
+        <action className="com.tibco.tct.amx.actions.PostCheckDBConnectionAction"	keys="/admin/clinfo/logsrvdatabase/usedefault"														pageId="logsrvdatabase"/>
+        <action className="com.tibco.tct.amx.actions.PostCheckDBConnectionAction"	keys="/admin/clinfo/payloadsrvdatabase/usedefault"													pageId="payloadsrvdatabase"/>
+		<action className="com.tibco.tct.admin.AdminSummaryPagePostAction" successMessage="Administrator server created successfully." />
+    </postaction>
+
+    <body>
+     	<group style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	    <input id="datafile" class="filechooser" buttonText="Browse" dialogMessage="Please select the folder to store session scripts and log">
+		<label>Session Scripts and Log Folder:</label>
+		<action className="com.tibco.tct.framework.actions.SaveDataModelDialogAction" event="xforms-value-changed" />
+	    </input>
+	</group>
+	<group style="layout: grid; layout-cols: 2; align: fill; hgrab: true; layout-bottom: 10;">
+	    <input id="adminurl" class="hyperlink">
+		<label>Administrator URL:</label>
+		<openurl event="click" />
+	    </input>
+	</group>
+        <group id="postactions" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <label>Click Configure to execute the following actions</label>
+	</group>
+	<group id="products" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <label>Select the products to deploy</label>
+	</group>
+    </body>
+</xform>

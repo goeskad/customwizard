@@ -1,0 +1,37 @@
+# ----- standard ignores, sorted by header, sorted under each header ----------
+
+# Eclipse generated files.
+**/.checkstyle
+**/.classpath
+**/.project
+**/.settings
+
+# svn files and bin classes
+**/.svn/**
+**/bin/**
+
+# Emacs generated tilde backup and auto-save files.
+*~
+.#*
+\#*
+
+# Intellij IDEA Project Files
+*.iml
+.idea
+
+# vscode Project Files
+.vscode
+
+# vscode local history module
+.history
+
+# Linux associated generated files.
+**/nohup.out
+*.bak
+*.swap
+
+# Log generated files.
+*.log
+
+# Mac OSX Finder generated files.
+.DS_Store

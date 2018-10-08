@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+    
+    <preaction>
+        <action className="com.tibco.tct.admin.AdminSaveDataModelAction" contributoName="admin" />
+        <action className="com.tibco.tct.admin.SetPageFlowAction" />
+	<action id="securecommunicationaction" className="com.tibco.tct.admin.SecureCommunicationAction" />
+    </preaction>
+
+    <body>
+        <output>
+This wizard will help you create a TIBCO ActiveMatrix Administrator server on this machine.
+Before proceeding with the wizard, start the TIBCO Enterprise Messaging Service notification server required by 
+Administrator.
+
+If you will be using an external database, start the database server. If you are using Oracle, Microsoft SQL Server,
+or IBM DB2, first package the database driver using the Configure Third-Party Driver wizard before running this wizard.
+
+This wizard will create and launch the TIBCO Host instance and ActiveMatrix node required by the Administrator server.
+Refer to your product installation and Administration guides for details.
+        </output>
+	<group style="layout: grid; layout-cols: 2; align: fill; hgrab: true; layout-left: 5; layout-top: 10">
+	    <trigger id="optioncontrol" class="checkbox" ref="/admin/securedcommunication" hint="Selecting the above option will select appropriate defaults to enable SSL on all transports used by Administrator.">
+	        <label>Configure to Secure All Communication with SSL</label>
+	        <action refid="securecommunicationaction" event="click" />
+	    </trigger>
+	</group>
+    </body>
+</xform>

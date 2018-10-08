@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tct-tools" default="-convert-build-properties-to-xml">
+    <property name="tmp.dir" value="${tct.scripts.dir}/tmp" />
+    <property name="build.config.xml" value="${tmp.dir}/build-config.xml" />
+
+    <target name="-init" depends="-load-build-properties, -convert-build-properties-to-xml">
+       <for param="template.file">
+            <fileset dir="${tct.templates.dir}">
+                <include name="*.xsl" />
+            </fileset>
+            <sequential>
+                <propertyregex property="template.file.name" override="true" input="@{template.file}" regexp="([^/\\]*$)" select="\1" />
+                <propertyregex property="target.file.name" override="true" input="${template.file.name}" regexp="(.*)\.xsl" select="\1" />
+                <xslt style="@{template.file}" in="${build.config.xml}" out="${tmp.dir}/${target.file.name}" force="yes" />
+            </sequential>
+        </for>
+    </target>
+
+    <target name="-clean-up">
+        <delete dir="${tmp.dir}" quiet="true" />
+    </target>
+
+    <target name="-check-build-properties">
+        <echo>loading tct build properties from ${tct.scripts.dir}/build.properties</echo>
+        
+        <available type="file" file="${tct.scripts.dir}/build.properties" property="build.properties.file.exists"/>
+        <fail unless="build.properties.file.exists" message="${tct.scripts.dir}/build.properties does not exist!"/>
+    </target>
+
+    <target name="-load-build-properties" depends="-check-build-properties">
+        <property file="${tct.scripts.dir}/build.properties"/>
+    </target>
+
+    <target name="-load-antcontrib">
+        <available type="file" file="${tibco.home}/tools/lib/antpackage.jar" property="antpackage.exists"/>
+        <fail unless="antpackage.exists" message="The antpackage.jar does not exist in ${tibco.home}/tools/lib!"/>
+
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <fileset dir="${tibco.home}/tools/lib" includes="antpackage.jar"/>
+            </classpath>
+        </taskdef>
+    </target>
+
+    <target name="-convert-build-properties-to-xml" depends="-load-antcontrib">
+        <property file="${tct.scripts.dir}/build.properties" prefix="_tct_build." />
+        
+        <mkdir dir="${tmp.dir}" />
+        <echo file="${build.config.xml}">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;config&gt;</echo>
+        
+        <propertyselector property="_build_property_list" override="true" match="_tct_build\..*" />
+        <for param="build.property" list="${_build_property_list}" >
+            <sequential>
+                <propertycopy property="build.property.value" from="@{build.property}" override="true" />
+                <propertyregex property="build.property.name" override="true" input="@{build.property}" regexp="_tct_build\.(.*)" select="\1" />
+                <echo file="${build.config.xml}" append="true">
+    &lt;${build.property.name}&gt;${build.property.value}&lt;/${build.property.name}&gt;</echo>
+            </sequential>
+        </for>
+        <echo file="${build.config.xml}" append="true">
+&lt;/config&gt;</echo>
+        <replace file="${build.config.xml}" token="&amp;" value="&amp;amp;" />
+    </target>
+
+    <macrodef name="register.system.service">
+        <attribute name="target.dir" />
+        <attribute name="target.executable" />
+        <sequential>
+            <if>
+                <os family="windows"/>
+                <then>
+                    <exec executable="@{target.dir}/@{target.executable}" dir="@{target.dir}">
+                        <arg value="--install"/>
+                    </exec>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+    
+    <macrodef name="create.shortcut">
+        <attribute name="target.name" />
+        <attribute name="target.dir" />
+        <attribute name="target.executable" />
+        <attribute name="shortcut.args" />
+        <sequential>
+            <if>
+                <os family="windows"/>
+                <then>
+                    <property name="shortcut.script" value="${tmp.dir}/shortcut_@{target.name}.vbs" />
+                    <echo file="${shortcut.script}">
+set WshShell = WScript.CreateObject("WScript.Shell")
+strOpstarten = WshShell.SpecialFolders("Desktop")
+set oShellLink = WshShell.CreateShortcut(strOpstarten &amp; "\@{target.name}.lnk")
+oShellLink.TargetPath = "@{target.dir}/@{target.executable}"
+oShellLink.WorkingDirectory = "@{target.dir}"
+</echo>
+                     <if>
+                         <length string="@{shortcut.args}" when="greater" length="0" />
+                         <then>
+                             <echo file="${shortcut.script}" append="true">
+oShellLink.Arguments = "@{shortcut.args}"
+</echo>
+                         </then>
+                     </if>
+                     <echo file="${shortcut.script}" append="true">
+oShellLink.Save
+</echo>
+                    <exec executable="wscript.exe">
+                        <arg value="${shortcut.script}"/>
+                    </exec>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+</project>

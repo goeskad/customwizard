@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard width="600" height="420" title="Create Trust Store">
+    <postaction>
+		<action className="com.tibco.configtool.sslwizard.SSLWizardPostAction" />
+	</postaction>
+
+	<pagegroup id="part1">
+		<page id="page1" title="SSL set up wizard - 1 of 2" description="Welcome to SSL setup wizard." referenceFile="page1.xform" />
+		<page id="page2" title="SSL set up wizard - 2 of 2" description="Select trust certificates." referenceFile="page2.xform" />
+	</pagegroup>
+</wizard>

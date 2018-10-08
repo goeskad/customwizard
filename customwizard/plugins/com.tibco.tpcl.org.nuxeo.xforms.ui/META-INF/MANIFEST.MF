@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XForms UI Plug-in
+Bundle-ClassPath: org.nuxeo.xforms.ui.jar
+Bundle-SymbolicName: com.tibco.tpcl.org.nuxeo.xforms.ui;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.nuxeo.xforms.ui.Activator
+Bundle-Vendor: Nuxeo
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.tibco.tpcl.org.nuxeo.xforms.core,
+ org.eclipse.ui.forms
+Eclipse-LazyStart: true
+Export-Package: org.nuxeo.xforms.ui,
+ org.nuxeo.xforms.ui.swt,
+ org.nuxeo.xforms.ui.swt.fields,
+ org.nuxeo.xforms.ui.swt.layout,
+ org.nuxeo.xforms.ui.swt.layout.data,
+ org.nuxeo.xforms.ui.swt.proxies,
+ org.nuxeo.xforms.ui.swt.style

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+   <link rel="StyleSheet" type="text/css" href="default.css"/>
+   
+   <body ref="/ert">
+       <group style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+           <label>Machine mapping</label>
+           <group style="layout: grid; layout-cols: 4;">
+               <output>Target machine source</output>
+               <trigger hint="Search all available machines from the subnet of target enterprise">
+                   <label>Search from subnet</label>
+		   <actiongroup>
+                       <action className="com.tibco.ert.ui.actions.SearchMachineAction" />
+                       <refresh />
+		   </actiongroup>
+               </trigger>
+               <input ref="target/machine-file" style="control: filechooser; width: 1;" showText="false" buttonText="Load from file" browseType="file" hint="Load the pre defined machines from a local file">
+		   <actiongroup event="FileChose">
+                       <action className="com.tibco.ert.ui.actions.UpdateMachineMappingAction" />
+                       <refresh />
+		   </actiongroup>
+               </input>
+           </group>
+           <group ref="machine-mapping" style="control: scrolledForm; layout: grid; layout-cols: 4; align: fill; hgrab: true; height: 100; bgcolor: #ECE9D8;">
+<!--${machineMapping}-->
+           </group>
+       </group>
+       <group style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+           <trigger hint="Click this button to generate the replication file">
+               <label>Generate replication file</label>
+               <action className="com.tibco.ert.ui.actions.GenerateReplicationFileAction" />
+           </trigger>
+       </group>
+    </body>
+</xform>

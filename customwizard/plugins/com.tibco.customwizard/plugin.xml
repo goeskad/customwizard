@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="customwizardapplication"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="com.tibco.customwizard.internal.CustomWizardApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="com.tibco.customwizard.customwizardapplication"
+            name="TIBCO Custom Wizard">
+         <property
+               name="windowImages"
+               value="launcher/branding/tibco16-8.gif,launcher/branding/tibco32-8.gif,launcher/branding/tibco48-8.gif,launcher/branding/tibco64-8.gif,launcher/branding/tibco128-8.gif"/>
+         <property
+               name="startupForegroundColor"
+               value="000000"/>
+         <property
+               name="startupProgressRect"
+               value="25,235,537,15"/>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20"/>
+      </product>
+   </extension>
+</plugin>

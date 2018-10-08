@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <reset />
+        <action id="sslaction" className="com.tibco.tct.framework.actions.VisibleAction" controlId="sslsetting" />
+		<action id="aliasaction" className="com.tibco.tct.admin.ServerConnSettingAliasAction" />
+		<action id="autogeneratekeystoreaction" className="com.tibco.tct.framework.actions.DisableAction" optionControlId="autogeneratekeystore" controlId="keystoregroups" />
+	</preaction>
+
+    <body ref="/admin">
+     	<group ref="serverconnsetting" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <input ref="host">
+		<label>Network Adapter:</label>
+		<validator className="com.tibco.tct.framework.actions.HostNameValidator" />
+	    </input>
+	    <input ref="managementport">
+		<label>Management Port:</label>
+		<validator className="com.tibco.tct.framework.actions.PortNumValidator" />
+	    </input>
+	    <input ref="httpport">
+	        <label>External HTTP Port:</label>
+		<validator className="com.tibco.tct.framework.actions.PortNumValidator" />
+		<validator validation="nonempty,number" />
+	    </input>
+	    <input ref="timeout">
+                 <label>Browser Idle Session Timeout(m):</label>
+                 <validator validation="nonempty,number" />
+             </input>
+	    <trigger id="optioncontrol" class="checkbox" ref="enablessl">
+	        <label>Enable SSL for External HTTP Port</label>
+	        <action refid="sslaction" event="click"  />
+	    </trigger>
+	    <group id="sslsetting" ref="/admin/serverconnsetting" style="colspan: 2; layout: grid; layout-cols: 1; align: fill; hgrab: true; disable: true;">
+				<trigger id="autogeneratekeystore" class="radio"
+					ref="autogeneratekeystore">
+					<label>Self-signed Certificate (Not for production)</label>
+					<action refid="autogeneratekeystoreaction" event="click"/>
+				</trigger>
+		<trigger class="radio">
+	            <label>Imported Certificate</label>
+	            <action refid="autogeneratekeystoreaction" event="click"  />
+	        </trigger>
+	    
+	    <group id="keystoregroups" >
+		
+		<group id="keystoregroup" ref="/admin/serverconnsetting" style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+                    <input id="keystorelocation" ref="keystorelocation" class="filechooser" browseType="file">
+                        <label>Keystore Location:</label>
+			<validator validation="nonempty,exist" />
+			<action className="com.tibco.tct.admin.ChangeKeyStoreFileAction" event="FileChose" />
+                    </input>
+			<input id="keystoretype" appearance="minimal" ref="keystoretype"
+				style="colspan: 2; border: true; align: fill; hgrab: true; readOnly: true;">
+				<label>Keystore Type:</label>		
+			</input>
+			<input id="keystorepassword" ref="keystorepassword"
+				style="control: password; colspan: 2; border: true; align: fill; hgrab: true;"
+				obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+				<label>Keystore Password:</label>
+				<validator validation="nonempty"/>
+			</input>
+			<trigger>
+		        <label>Fetch Keystore</label>
+		        <action className="com.tibco.tct.admin.FetchKeystoreAction" />
+	        </trigger>
+	        </group>
+	        <group id="aliasgroup" ref="/admin/serverconnsetting" style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+       
+		    <select1 id="keyalias"  ref="keyalias" appearance="minimal" style="colspan: 2; border: true; align: fill; hgrab: true;">
+                <label>Key Alias:</label>
+             </select1>
+  		     <input id="keypassword" ref="keypassword" style="control: password; colspan: 2; border: true; align: fill; hgrab: true;" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+			      <label>Key Password:</label>
+	  			  <validator validation="nonempty" />
+		     </input>
+		      <trigger>
+			     <label>Verify Keystore</label>
+	             <action className="com.tibco.tct.framework.actions.KeyStoreValidator" />
+		     </trigger>
+		     </group>
+		 </group>
+	  </group>
+	  </group>
+    </body>
+</xform>

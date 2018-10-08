@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wizard width="600" height="420" title="TIBCO ActiveMatrix Environment Extraction and Replication Utility" description="Main menu" icon="ui/icons/product.ico">
+    <datamodel file="data.xml" storeDir="." />
+
+    <classloaderfactory className="com.tibco.customwizard.internal.support.URLClassLoaderFactory">
+		<file path="ert.jar" />
+	</classloaderfactory>
+
+    <wizardprocessor className="com.tibco.ert.ui.customwizard.CWProcessor" />
+
+	<pagegroup id="configuration" title="Configuration" icon="Configuration.png">
+		<page id="configuration" title="Configuration" description="" referenceFile="ui/configuration.xform" />
+	</pagegroup>
+    
+	<pagegroup id="er" title="Enterprise Extraction and Replication" icon="ExtractAndReplicate.png">
+	    <page id="extraction" title="Extraction" description="Please set the source enterprise information" referenceFile="ui/extraction.xform" />
+		<page id="replication-target" title="Target enterprise" description="Please set the target enterprise information" referenceFile="ui/replication-target.xform" />
+		<page id="machine-mapping" title="Machine Mapping" description="Please mapping the source machine to target machine" referenceFile="ui/machine-mapping.xform" />
+		<page id="replication" title="Replication" description="Do replication" referenceFile="ui/replication.xform" />
+	</pagegroup>
+
+	<pagegroup id="extraction" title="Enterprise Extraction" icon="Extract.png">
+		<page id="extraction" title="Extraction" description="Please set the source enterprise information" referenceFile="ui/extraction.xform" />
+	</pagegroup>
+
+	<pagegroup id="replication" title="Enterprise Replication" icon="Replicate.png">
+		<page id="replication-target" title="Target enterprise" description="Please set the target enterprise information" referenceFile="ui/replication-target.xform" />
+		<page id="machine-mapping" title="Machine Mapping" description="Please mapping the source machine to target machine" referenceFile="ui/machine-mapping.xform" />
+		<page id="replication" title="Replication" description="Do replication" referenceFile="ui/replication.xform" />
+	</pagegroup>
+</wizard>

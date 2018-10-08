@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <body ref="/admin">
+     	<group ref="baseinfo" style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	    <input ref="enterprisename" style="hgrab: true;align: fill;border: true;colspan: 2;">
+		<label>Enterprise Name:</label>
+		<validator validation="nonempty" />
+	    </input>
+	    <input ref="servername" style="hgrab: true;align: fill;border: true;colspan: 2;">
+		<label>Server Name:</label>
+		<validator validation="nonempty" />
+	    </input>
+	</group>
+    </body>
+</xform>

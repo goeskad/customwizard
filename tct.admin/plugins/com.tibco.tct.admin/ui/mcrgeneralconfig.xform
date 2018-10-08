@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <body ref="/admin/mcrinfo">
+        <group style="layout: grid; layout-cols: 1; align: fill; hgrab: true; ">
+            <output>
+Extended monitoring provides additional metrics and time periods (24 hour and 7 day). These features
+support advanced performance troubleshooting, but impose an additional load on the machine on which
+Administrator runs.
+            </output>
+	</group>
+     	<group ref="generalconfig" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <trigger class="checkbox" ref="extendedmonitoringenabled">
+		<label>Enable Extended Monitoring</label>
+	    </trigger>
+	</group>
+    </body>
+</xform>

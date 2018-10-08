@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+		<reset />
+	</preaction>
+	
+    <body ref="/admin">
+		<group ref="ldaprealm/group" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+			<select1 id="indication" appearance="minimal" ref="indication">
+					<label>Group Indication:</label>
+					<item><label>Group has users</label><value>groupHasUsers</value></item>
+					<item><label>User has groups</label><value>userHasGroups</value></item>
+			<!--item><label>User DN hierarchy implies group memberships</label><value>userDNHasGroups</value></item-->
+			<action className="com.tibco.tct.admin.ChooseGroupIndicationAction" event="xforms-value-changed" />
+				</select1>
+			<input id="basedn" ref="basedn" hint="Search for users from this Base DN. Contact your LDAP Administrator for these values">
+			<label>Group Search Base DN:</label>
+			<validator validation="nonempty" />
+			</input>
+			<input id="filter" ref="filter" hint="The expression {0} is replaced by the user's name. Contact your LDAP Administrator for these values">
+			<label>Group Search Expression:</label>
+			<validator validation="nonempty" />
+			</input>
+			<input id="groupuserattr" ref="groupuserattr" hint="The attribute in each group denoting its users. Contact your LDAP Administrator for these values">
+			<label>Group Attribute with User Names:</label>
+			<validator validation="nonempty" />
+			</input>
+			<input id="groupattr" ref="groupattr" hint="The attribute containing the group's name. Contact your LDAP Administrator for these values">
+			<label>Group Attribute with Group Name:</label>
+			<validator validation="nonempty" />
+			</input>
+			<input id="subgroupattr" ref="subgroupattr" hint="The attribute in each group object identifying subgroups. Contact your LDAP Administrator for these values">
+			<label>Group Attribute with Subgroup Names:</label>
+			<validator validation="nonempty" />
+			</input>
+			<input id="userAttributeGroupsName" ref="userAttributeGroupsName" hint="The attribute in the user's DN or attributes identifying the group.  Ex. memberOf (user has groups) or OU (user DN). Contact your LDAP Administrator for these values">
+			<label>User Attribute with Group Names:</label>
+			<validator validation="nonempty" />
+			</input>
+				<trigger class="checkbox" ref="subtree" hint="If checked, also search subfolders for groups. Contact your LDAP Administrator for these values">
+					<label>Group Search Scope Subtree</label>
+			</trigger>
+		</group>
+    </body>
+</xform>

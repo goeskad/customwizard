@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <reset />
+        <action id="sslaction" className="com.tibco.tct.admin.InternalHttpSSLAction" optionControlId="sslcontrol" />
+    </preaction>
+
+    <body ref="/admin">
+         <group ref="internalhttpconn" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+             <input ref="port">
+                 <label>Internal HTTP Port:</label>
+                 <validator className="com.tibco.tct.framework.actions.PortNumValidator" />
+             </input>
+             <trigger id="sslcontrol" class="checkbox" ref="isSecuredWithTCS">
+                 <label>Enable SSL for Internal HTTP Port</label>
+                 <action refid="sslaction" event="click"  />
+             </trigger>
+         </group>
+    </body>
+</xform>

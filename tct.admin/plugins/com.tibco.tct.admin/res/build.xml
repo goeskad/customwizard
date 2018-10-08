@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tct-admin" default="end-to-end">
+    <dirname property="tct.scripts.dir" file="${ant.file.tct-admin}"/>
+
+    <property name="tct.templates.dir" value="${tct.scripts.dir}/templates"/>
+
+    <import file="${tct.templates.dir}/tct-tools.xml"/>
+
+    <target name="end-to-end" depends="-init, admin-full-setup, deploy-mcr, deploy-commonlogging, -clean-up"/>
+
+    <target name="admin-full-setup" depends="-init">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts" antfile="instance-mgmt.xml" target="full-setup">
+            <property name="TIBCO_HOME" value="${tibco.home}"/>
+            <property name="instance.properties.file" value="${tmp.dir}/admin-instance.properties"/>
+            <property name="tibcohost.properties.file" value="${tmp.dir}/admin-tibcohost-instance.properties"/>
+            <property name="bootstrap.data.file" value="${tmp.dir}/integration_create_admin_data.xml"/>
+            <property name="envt.data.file" value="${tmp.dir}/admin-envt-data.xml"/>
+            <property name="logging.config.properties.file" value="${tct.templates.dir}/log-config-override.properties"/>
+        </ant>
+
+		<!-->register service and create shortcut for tibcohost</-->
+		<if>
+            <istrue value="${admin.tibcohost.registerservice}"/>
+            <then>
+                <register.system.service target.dir="${tibco.config.mgmt.home}/tibcohost/Admin-${admin.enterprise.name}-${admin.instance.name}/host/bin" 
+				    target.executable="tibcohost.exe" />
+            </then>
+        </if>
+
+		<if>
+            <istrue value="${admin.tibcohost.createshortcut}"/>
+            <then>
+                <condition property="tibcohost.shortcut.args" value="--start" else="">
+                    <istrue value="${admin.tibcohost.registerservice}"/>
+                </condition>
+                <create.shortcut target.dir="${tibco.config.mgmt.home}/tibcohost/Admin-${admin.enterprise.name}-${admin.instance.name}/host/bin" 
+				    target.name="Admin-${admin.enterprise.name}-${admin.instance.name}" target.executable="tibcohost.exe" shortcut.args="${tibcohost.shortcut.args}" />
+            </then>
+        </if>
+    </target>
+
+    <target name="deploy-products" depends="-init">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts" antfile="instance-mgmt.xml" target="deploy-products">
+            <property name="instance.properties.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+    
+    <target name="deploy-mcr" depends="-init">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts/governance" antfile="governance_integration_build.xml">
+           <property name="TIBCO_HOME" value="${tibco.home}"/>
+           <property name="gov.data.file" value="${tmp.dir}/governance_integration_data.xml"/>
+		   <property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+
+	 <target name="enable-mcr-extended-monitoring" depends="-init" description="enable extended monitoring. This provides additional monitoring capabilities. For eg, rate metrics, additional time windows">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts/governance" antfile="governance_integration_build.xml" target="enable.extended.monitoring.with.aggregator.app.restart">
+            <property name="TIBCO_HOME" value="${tibco.home}"/>
+            <property name="gov.data.file" value="${tmp.dir}/governance_integration_data.xml"/>
+	    <property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+
+    <target name="disable-mcr-extended-monitoring" depends="-init" description="disable extended monitoring">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts/governance" antfile="governance_integration_build.xml" target="disable.extended.monitoring.with.aggregator.app.restart">
+            <property name="TIBCO_HOME" value="${tibco.home}"/>
+            <property name="gov.data.file" value="${tmp.dir}/governance_integration_data.xml"/>
+	    <property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+
+    <target name="update.mcr.plat.service.log.config" depends="-init" description="Update appender configuration for lifecycle notification component running on system node">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts/governance" antfile="governance_integration_build.xml" target="-change.component.log">
+            <property name="TIBCO_HOME" value="${tibco.home}"/>
+	    <property name="gov.data.file" value="${tmp.dir}/governance_integration_data.xml"/>
+	    <property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+
+    <target name="update.monitoring.log.config" description="Update appender configuration for all service probe components in all nodes for an environment">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts/governance" antfile="governance_integration_build.xml" target="-change.component.log">
+            <property name="TIBCO_HOME" value="${tibco.home}"/>
+	    <property name="gov.data.file" value="mcrconfig_data.xml"/>
+	    <property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+
+    <target name="deploy-commonlogging" depends="-init">
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts" antfile="cl_logservice_build.xml">
+		    <property name="TIBCO_HOME" value="${tibco.home}"/>
+            <property name="data.file" value="${tmp.dir}/cl_logservice_data.xml"/>
+			<property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+        <ant dir="${tibco.home}/administrator/${amx.version}/scripts" antfile="cl_payloadservice_build.xml">
+		    <property name="TIBCO_HOME" value="${tibco.home}"/>
+            <property name="data.file" value="${tmp.dir}/cl_payloadservice_data.xml"/>
+			<property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+		<ant dir="${tibco.home}/administrator/${amx.version}/scripts/logging/policy" antfile="policy_logging_build.xml">
+		    <property name="TIBCO_HOME" value="${tibco.home}"/>
+            <property name="data.file" value="${tmp.dir}/policy_logging_data.xml"/>
+			<property name="props.file" value="${tmp.dir}/admin-instance.properties"/>
+        </ant>
+    </target>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ert>
+    <configuration>
+        <extraction></extraction>
+        <replication></replication>
+        <cli></cli>
+    </configuration>
+    <source>
+        <host>localhost</host>
+        <port>8120</port>
+        <username>admin</username>
+        <password>#!Qdx0IAs6i7AKiPm61vxrfo72GtLzRBld</password>
+        <dbpassword>#!22BimzHPkJ5d5i//83wZhw==</dbpassword>
+        <datafile>E:/ert_demo/extraction/localhost-8120-20110426170248_Enterprise.zip</datafile>
+    </source>
+    <target>
+        <host>localhost</host>
+        <port>8120</port>
+        <username>admin</username>
+        <password>#!zi3dGB0LiXJmhyU0zxrp5wtpLM4gzNTl</password>
+        <dbpassword>#!re/TugFXYK/ekIij8iTR+Q==</dbpassword>
+        <datafile></datafile>
+        <machine-file></machine-file>
+    </target>
+    <extraction>
+	    <target>*</target>
+        <repeat/>
+        <interval/>
+    </extraction>
+    <replication>
+        <start-node/>
+        <start-sa/>
+        <extract-result>false</extract-result>
+    </replication>
+    <machine-mapping>
+        <target>
+        </target>
+        <source>
+        </source>
+    </machine-mapping>
+</ert>

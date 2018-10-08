@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <body ref="/admin">
+			<group ref="ldaprealm"
+				style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+				<input id="hostportlist" ref="hostportlist"
+					hint="ldap.company.com:389. For fault tolerance, specify a comma-separated list of machines.">
+					<label>Machine Name Port List:</label>
+					<validator className="com.tibco.tct.framework.actions.HostPortListValidator"/>
+				</input>
+				<trigger>
+					<label>Fetch DN</label>
+					<action className="com.tibco.tct.amx.actions.FetchBaseDNAction" keyPrefix="/admin/ldaprealm" logonUserKeyPrefix="/admin/authenticationrealm"/>
+				</trigger>
+				<output style="color: #FF0000">[Note: Can't fetch DN if the ldap server doesn't support "none" authentication type]</output>
+				<input id="username" ref="username"
+					hint="TIBCO ActiveMatrix Administrator logs on to the LDAP server as this user.">
+					<label>Bind DN Name:</label>
+					<validator validation="nonempty"/>
+				</input>
+				<input id="password" class="password" ref="password"
+					obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+					<label>Password:</label>
+				</input>
+				<input ref="factory"
+					hint="Keep the default value 'com.sun.jndi.ldap.LdapCtxFactory' (recommended for all platforms)">
+					<label>Context Factory:</label>
+					<validator validation="nonempty"/>
+				</input>
+				
+				<group ref="user"
+					style="layout: grid; layout-cols: 2; colspan: 2; align: fill; hgrab: true;">
+					<label>User Search Configuration</label>
+					<input id="userBaseDN" ref="basedn"
+						hint="Contact your LDAP administrator for these values.">
+						<label>User Search Base DN:</label>
+						<validator validation="nonempty"/>
+					</input>
+					<input id="filter" ref="filter"
+						hint="Contact your LDAP administrator for these values.">
+						<label>User Search Expression:</label>
+						<validator validation="nonempty"/>
+					</input>
+					<input ref="attrname">
+						<label>User Attribute with User Name:</label>
+						<validator validation="nonempty"/>
+					</input>
+				</group>
+				<input ref="timeout"
+					hint="-1 is the provider default and positive values are in milliseconds">
+					<label>Search Timeout(ms):</label>
+					<validator validation="nonempty,number"/>
+				</input>
+				
+			</group>
+    </body>
+</xform>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+   <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+   <body>
+	   <group style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	       <input class="filechooser" ref="/ert/configuration/extraction" hint="The location where to store the extraction file: Enterprise.xml">
+		   <label>Extraction Directory</label>
+		   <validator validation="nonempty,exist" />
+	       </input>
+	       <input class="filechooser" ref="/ert/configuration/replication" hint="The location where to store the generated replication file: ReplicateEnterprise.xml">
+		   <label>Replication Directory</label>
+		   <validator validation="nonempty,exist" />
+	       </input>
+	       <input class="filechooser" ref="/ert/configuration/cli" browseType="file" filterExtensions="admincmdline.exe" hint="The path which is pointed to the admincmdline.exe">
+		   <label>CLI Executable</label>
+		   <validator validation="nonempty,exist" />
+	       </input>
+	   </group>
+    </body>
+</xform>

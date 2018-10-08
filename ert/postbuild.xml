@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ERT-Post-build" default="build-zip">
+    <dirname property="ert.scripts.dir" file="${ant.file.ERT-Post-build}"/>
+
+    <property name="ert.deploy.home" value="${autobuild.dir.output.candidates}/deploy" />
+    <property name="rcp.home" value="${ert.deploy.home}/rcp" />
+    <property name="rcp.download.dir" value="${autobuild.dir.eclipse.extensions}" />
+
+    <property name="ert.home" value="${ert.deploy.home}/1.0" />
+    <property name="ert.source" value="${autobuild.dir.release-unit}/plugins/com.tibco.ert" />
+    
+	<property name="install.rcp" value="true" />
+
+	<import file="${ert.scripts.dir}/install-rcp.xml" />
+
+    <target name="build-zip" depends="create-dirs, install-rcp, create-link-file, delete-eclipse-configuration, copy-res, copy-eclipse-executable, create-eclipse-ini, create-eclipse-dir, zip-ert" />
+    
+	<target name="create-dirs">
+		<mkdir dir="${ert.home}" />
+		<mkdir dir="${ert.home}/logs" />
+	</target>
+
+    <target name="create-link-file" if="install.rcp">
+        <echo message="create ert link file: ${rcp.home}/3.5/links/ERT.link" />
+        <mkdir dir="${rcp.home}/3.5/links"/>
+        <echo file="${rcp.home}/3.5/links/ERT.link" message="path=."/>
+    </target>
+    
+	<target name="delete-eclipse-configuration" if="install.rcp">
+        <delete dir="${rcp.home}/3.5/configuration"/>
+    </target>
+
+	<target name="copy-res">
+	    <copy todir="${ert.home}">
+            <fileset dir="${ert.source}">
+                <include name="data.xml"/>
+                <include name="WizardConfig.xml"/>
+            </fileset>
+        </copy>
+		<copy todir="${ert.home}" flatten="true">
+            <fileset dir="${autobuild.dir.output.candidates}/release/eclipse/plugins" includes="**/*.jar" />
+        </copy>
+		<copy todir="${ert.home}/ui">
+            <fileset dir="${ert.source}/ui" />
+        </copy>
+		<copy todir="${ert.home}/ant">
+            <fileset dir="${ert.source}/ant" />
+        </copy>
+	</target>
+
+    <target name="copy-eclipse-executable" if="install.rcp">
+        <condition property="executable-prefix" value="Eclipse.app/Contents/MacOS/">
+            <os family="mac"/>
+        </condition>
+        <property name="executable-prefix" value="" />
+		<condition property="executable-suffix" value=".exe">
+            <os family="windows"/>
+        </condition>
+        <property name="executable-suffix" value="" />
+        <copy file="${rcp.home}/3.5/${executable-prefix}eclipse${executable-suffix}" tofile="${ert.home}/ERT${executable-suffix}" />
+        <chmod file="${ert.home}/ERT${executable-suffix}" perm="775" />
+    </target>
+
+    <target name="create-eclipse-ini" if="install.rcp">
+	    <for param="launcher-library-param">
+            <dirset dir="${rcp.home}/3.5/plugins">
+                <include name="org.eclipse.equinox.launcher.*" />
+            </dirset>
+            <sequential>
+                <propertyregex property="launcher.library" override="true" input="@{launcher-library-param}" 
+                               regexp="([^/\\]*$)" select="\1" />
+            </sequential>
+        </for>
+
+		<echo file="${ert.home}/ERT.ini">-showlocation
+-configuration
+./eclipse/configuration 
+--launcher.XXMaxPermSize
+256m
+-startup
+../rcp/3.5/plugins/org.eclipse.equinox.launcher_1.0.201.R35x_v20090715.jar
+--launcher.library
+../rcp/3.5/plugins/${launcher.library}
+-vmargs
+-Dorg.osgi.framework.bootdelegation=javax.xml.*
+-Dcw.config.location=WizardConfig.xml
+-Xms256m
+-Xmx768m
+-XX:MaxPermSize=512m
+-XX:+UnlockDiagnosticVMOptions
+-XX:+UnsyncloadClass
+
+        </echo>
+    </target>
+
+    <target name="create-eclipse-dir">
+	    <mkdir dir="${ert.home}/eclipse" />
+		<echo file="${ert.home}/eclipse/.eclipseextension">id=org.eclipse.platform
+name=Eclipse Platform
+
+
+        </echo>
+		<mkdir dir="${ert.home}/eclipse/configuration" />
+		<echo file="${ert.home}/eclipse/configuration/config.ini">#Product Runtime Configuration File
+
+eclipse.product=com.tibco.customwizard.product
+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.core.runtime@start
+osgi.bundles.defaultStartLevel=4
+
+        </echo>
+        <mkdir dir="${ert.home}/eclipse/plugins" />
+		<copy todir="${ert.home}/eclipse/plugins" file="${ert.source}/lib/org.eclipse.ui.forms_3.4.1.v20090714_35x.jar" />
+	    <copy todir="${ert.home}/eclipse/plugins">
+            <fileset dir="${autobuild.dir.eclipse.extensions}/plugins" includes="com.tibco.customwizard_*.jar" />
+        </copy>
+        <mkdir dir="${ert.home}/eclipse/plugins/com.tibco.tpcl.org.nuxeo.xforms.core_1.1.0.001" />
+		<copy todir="${ert.home}/eclipse/plugins/com.tibco.tpcl.org.nuxeo.xforms.core_1.1.0.001">
+            <fileset dir="${autobuild.dir.eclipse.extensions}/plugins/com.tibco.tpcl.org.nuxeo.xforms.core_1.1.0.001" includes="**/*.*" />
+        </copy>
+		<mkdir dir="${ert.home}/eclipse/plugins/com.tibco.tpcl.org.nuxeo.xforms.ui_1.1.0.001" />
+		<copy todir="${ert.home}/eclipse/plugins/com.tibco.tpcl.org.nuxeo.xforms.ui_1.1.0.001">
+            <fileset dir="${autobuild.dir.eclipse.extensions}/plugins/com.tibco.tpcl.org.nuxeo.xforms.ui_1.1.0.001" includes="**/*.*" />
+        </copy>
+	</target>
+
+	<target name="zip-ert" if="zip.ert">
+	    <tstamp>
+	    <format property="touch.time" pattern="yyyy-MM-dd" timezone="GMT"/>
+	    </tstamp>
+	    <zip destfile="${ert.deploy.home}/EnterpriseERT${touch.time}.zip" basedir="${ert.deploy.home}" />
+	</target>
+</project>

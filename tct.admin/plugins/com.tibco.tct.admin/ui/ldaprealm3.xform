@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+		<reset />
+		<action id="sslaction" className="com.tibco.tct.framework.actions.VisibleAction" optionControlId="sslcontrol" controlId="sslgroup" />
+		<action id="setFileFilter" className="com.tibco.tct.framework.actions.SetFileFilterAction" fileTypeControl="keystoretype" fileChooserControl="keystorelocation" />
+	</preaction>
+
+    <body ref="/admin">
+     	<group ref="ldaprealm" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <label>LDAP Realm</label>
+	    <trigger class="checkbox" ref="user/subtree" hint="If checked also search subfolders for users. Contact your LDAP Administrator for these values">
+		<label>User Search Scope Subtree</label>
+	    </trigger>
+	    <select1 appearance="editable" ref="authenticationtype">
+                <label>Security Authentication: </label>
+                <item><value>Simple</value></item>
+                <item><value>Strong</value></item>
+		<item><value>None</value></item>
+            </select1>
+	</group>
+	<!--group ref="ldaprealm" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	    <label>LDAP Authentication</label>
+	    <input ref="user/extraattr" hint="Comma-separated list of additional LDAP user attributes placed in the SAML assertion. Contact your LDAP Administrator for these values">
+		<label>Extra User-Attributes (optional):</label>
+	    </input>
+	</group-->
+	<group style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+	    <trigger id="sslcontrol" class="checkbox" ref="/admin/ldaprealm/enablessl">
+	        <label>LDAP Server is SSL Enabled</label>
+	        <action refid="sslaction" event="click"  />
+	    </trigger>
+	</group>
+	<group id="sslgroup" style="colspan: 2; layout: grid; layout-cols: 1; align: fill; hgrab: true; disable: true;">
+	    <label>SSL Trust Store Configuration</label>
+            <group style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+		<trigger>
+		    <label>Create a Trust Store...</label>
+		    <action className="com.tibco.tct.amx.actions.OpenSSLWizardAction" keyStorePrefix="/admin/ldaprealm" serverKeyName="/admin/ldaprealm/hostportlist" serverType="hostportlist" />
+	        </trigger>
+		    <output style="colspan: 2;">or Upload a Trust Store File:</output>
+            </group>
+            <group ref="/admin/ldaprealm" style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	        <input id="keystorelocation" ref="keystorelocation" class="filechooser" browseType="file">
+                    <label>Trust Store Location:</label>
+		    <validator validation="nonempty,exist" />
+                </input>
+		<select1 id="keystoretype" appearance="minimal" ref="keystoretype"
+			style="colspan: 2; border: true; align: fill; hgrab: true;">
+			<label>Trust Keystore Type:</label>
+			<item>
+				<value>JCEKS</value>
+			</item>
+			<item>
+				<value>JKS</value>
+			</item>
+			<action refid="setFileFilter" event="DOMFocusOut"/>
+		</select1>
+		<input id="keystorepassword" ref="keystorepassword" style="control: password; colspan: 2; border: true; align: fill; hgrab: true;" obfuscatorClass="com.tibco.tct.amx.support.PasswordObfuscator">
+		    <label>Trust Store Password:</label>
+		    <validator validation="nonempty" />
+	        </input>
+            </group>
+	</group>
+	<group style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+            <trigger>
+                <label>Test Connection</label>
+                <action className="com.tibco.tct.admin.TestLDAPConnectionAction" />
+            </trigger>
+	</group>
+    </body>
+</xform>

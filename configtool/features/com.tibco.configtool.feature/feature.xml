@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.tibco.configtool.feature"
+      label="%featureName"
+      version="1.2.0.qualifier"
+      provider-name="%providerName_notrans">
+
+   <description url="http://www.tibco.com/devnet/business_studio/default.jsp">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="com.tibco.devtools.install.support.feature" version="1.2.0"/>
+      <import feature="com.tibco.customwizard.feature" version="1.2.0"/>
+      <import feature="com.tibco.devtools.install.support.feature" version="1.1.0"/>
+      <import feature="com.tibco.neo.common" version="2.4.0"/>
+      <import feature="com.tibco.neo.eclipse.support.feature" version="1.0.0"/>
+      <import feature="com.tibco.neo.machine.feature" version="1.2.0"/>
+      <import feature="com.tibco.neo.machine.osgi.feature" version="1.0.0"/>
+      <import feature="com.tibco.tpcl.javax.system.exports.feature" version="5.0.0"/>
+      <import feature="com.tibco.tpcl.org.apache.log4j.feature" version="1.2.100"/>
+      <import feature="com.tibco.tpcl.org.apache.tools.ant.feature" version="1.7.100"/>
+      <import feature="com.tibco.tpcl.org.slf4j.log4j12.feature" version="1.5.2"/>
+      <import feature="com.tibco.tpcl.emf" version="2.4.2"/>
+      <import feature="com.tibco.security.tibcrypt.feature" version="2.14" />
+      <import feature="com.tibco.tpcl.javax.jms.feature.eclipse" version="1.1.100"/>
+      <import feature="com.tibco.jms.jmsclient.feature.eclipse" version="5.1.5"/>
+      <import feature="com.tibco.trinity.realm.core.feature" version="1.2.100"/>
+   </requires>
+
+   <plugin
+         id="com.tibco.configtool"
+         download-size="0"
+         install-size="0"
+         version="1.2.0.qualifier"
+         unpack="true"/>
+
+   <plugin
+         id="com.tibco.amx.tct.help.doc"
+         download-size="0"
+         install-size="0"
+         version="1.2.0.qualifier"
+         unpack="true"/>
+</feature>

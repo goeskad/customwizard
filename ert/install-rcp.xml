@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="install-rcp">
+    <target name="install-rcp" if="install.rcp">
+    
+        <property name="rcp.url" value="http://archive.eclipse.org/eclipse/downloads/drops/R-3.5.2-201002111343/eclipse-RCP-3.5.2" />
+
+        <if>
+            <os family="windows"/>
+            <then>
+                <if>
+                    <not><isset property="64bit" /></not>
+                    <then>
+                        <if>
+                            <not><available file="${rcp.download.dir}/rcp.zip" /></not>
+                            <then>
+                                <get src="${rcp.url}-win32.zip" dest="${rcp.download.dir}/rcp.zip" verbose="true" usetimestamp="true"/>
+                            </then>
+                        </if>
+                        <unzip src="${rcp.download.dir}/rcp.zip" dest="${rcp.home}" />
+                    </then>
+                    <else>
+                        <if>
+                            <not><available file="${rcp.download.dir}/rcp64.zip" /></not>
+                            <then>
+                                <get src="${rcp.url}-win32-x86_64.zip" dest="${rcp.download.dir}/rcp64.zip" verbose="true" usetimestamp="true"/>
+                            </then>
+                        </if>
+                        <unzip src="${rcp.download.dir}/rcp64.zip" dest="${rcp.home}" />
+                    </else>
+                </if>
+                <move file="${rcp.home}/eclipse" tofile="${rcp.home}/3.5" />
+            </then>
+            
+            <elseif>
+                <os family="mac"/>
+                <then>
+                    <if>
+                        <not><available file="${rcp.download.dir}/rcp.tar" /></not>
+                        <then>
+                            <get src="${rcp.url}-macosx-cocoa-x86_64.tar.gz" dest="${rcp.download.dir}/rcp.tar.gz" verbose="true" usetimestamp="true"/>
+                            <gunzip src="${rcp.download.dir}/rcp.tar.gz" dest="${rcp.download.dir}/rcp.tar" />
+                        </then>
+                    </if>
+                    <untar src="${rcp.download.dir}/rcp.tar" dest="${rcp.home}"/>
+                    <move file="${rcp.home}/eclipse" tofile="${rcp.home}/3.5" />
+                    <chmod file="${rcp.home}/3.5/Eclipse.app/Contents/MacOS/eclipse" perm="u+x"/>
+                </then>
+            </elseif>
+            
+            <elseif>
+                <os name="SunOS" arch="x86"/>
+                <then>
+					<if>
+						<not><available file="${rcp.download.dir}/rcp.zip" /></not>					
+						<get src="${rcp.url}-solaris-gtk-x86.zip" dest="${rcp.download.dir}/rcp.zip" verbose="true" usetimestamp="true"/>
+					</if>
+                    <unzip src="${rcp.download.dir}/rcp.zip" dest="${rcp.home}" />
+                    <move file="${rcp.home}/eclipse" tofile="${rcp.home}/3.5" />
+                </then>
+            </elseif>
+            
+            <elseif>
+                <os family="unix"/>
+                <then>
+                    <if>
+                        <not><isset property="64bit" /></not>
+                        <then>
+                            <if>
+                                <not><available file="${rcp.download.dir}/rcp.tar" /></not>
+                                <then>
+                                    <get src="${rcp.url}-linux-gtk.tar.gz" dest="${rcp.download.dir}/rcp.tar.gz" verbose="true" usetimestamp="true"/>
+                                    <gunzip src="${rcp.download.dir}/rcp.tar.gz" dest="${rcp.download.dir}/rcp.tar" />
+                                </then>
+                            </if>
+                            <untar src="${rcp.download.dir}/rcp.tar" dest="${rcp.home}"/>
+                        </then>
+                        <else>
+                            <if>
+                                <not><available file="${rcp.download.dir}/rcp64.tar" /></not>
+                                <then>
+                                    <get src="${rcp.url}-linux-gtk-x86_64.tar.gz" dest="${rcp.download.dir}/rcp64.tar.gz" verbose="true" usetimestamp="true"/>
+                                    <gunzip src="${rcp.download.dir}/rcp64.tar.gz" dest="${rcp.download.dir}/rcp64.tar" />
+                                </then>
+                            </if>
+                            <untar src="${rcp.download.dir}/rcp64.tar" dest="${rcp.home}"/>
+                        </else>
+                    </if>
+                    <move file="${rcp.home}/eclipse" tofile="${rcp.home}/3.5" />
+                    <chmod file="${rcp.home}/3.5/eclipse" perm="u+x"/>
+                </then>
+            </elseif>
+
+        </if>            
+    </target>
+
+</project>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+    <link rel="StyleSheet" type="text/css" href="default.css"/>
+
+    <preaction>
+        <action className="com.tibco.configtool.sslwizard.SetLabelWithHostPortAction" />
+    </preaction>
+
+    <body>
+        <output id="intro">
+This wizard will assist you to establish a chain of trust by importing the SSL-enabled server's certificates into the
+trust keystore you have specified. We'll first attempt to contact the SSL-enabled server to obtain its certificates. 
+
+{0}:{1} will be contacted using a standard SSL handshake without mutual authentication.
+You will get an opportunity to review server's certificate chain, decide what to trust
+and save the selected certificates in the trust keystore.
+        </output>
+	<output></output>
+	<output>Select a password for the new trust store this wizard will create.</output>
+	<group style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+            <input id="password" class="password" ref="password" obfuscatorClass="com.tibco.configtool.support.PasswordObfuscator">
+		<label>Password:</label>
+		<action className="com.tibco.configtool.sslwizard.ModifyPasswordAction" event="modify" />
+		<validator validation="nonempty" />
+            </input>
+            <input id="confirmpassword" class="confirmpassword" controlId="password" errorMessage="Confirm password must match password">
+                <label>Confirm Password:</label>
+		<validator validation="nonempty" />
+            </input>
+	</group>
+    </body>
+</xform>

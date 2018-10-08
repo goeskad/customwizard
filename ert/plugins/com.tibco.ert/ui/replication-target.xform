@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xform xmlns="http://www.w3.org/2002/xforms">
+   <link rel="StyleSheet" type="text/css" href="default.css"/>
+   
+   <preaction>
+       <reset />
+   </preaction>
+
+   <body ref="/ert">
+	   <group ref="target" style="layout: grid; layout-cols: 2; align: fill; hgrab: true;">
+	       <label>Target amx admin information</label>
+	       <input ref="host" hint="The host name of the target enterprise">
+		   <label>Host</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <input ref="port" hint="The http port of the target enterprise">
+		   <label>Port</label>
+		   <validator validation="nonempty,number" />
+	       </input>
+	       <input ref="username" hint="The user nam of the target enterprise">
+		   <label>User Name</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <input class="password" ref="password" obfuscatorClass="com.tibco.ert.ui.customwizard.CWPasswordObfuscator" hint="The password of the target enterprise">
+		   <label>Password</label>
+		   <validator validation="nonempty" />
+	       </input>
+	       <input class="password" ref="dbpassword" obfuscatorClass="com.tibco.ert.ui.customwizard.CWPasswordObfuscator" hint="The database password of the target enterprise">
+		   <label>Db Password</label>
+	       </input>
+	   </group>
+	   <group style="layout: grid; layout-cols: 3; align: fill; hgrab: true;">
+	       <input class="filechooser" ref="source/datafile" browseType="file" filterExtensions="*.zip" hint="Select the source Enterprise.xml to generate the replication file">
+		   <label>Source Data File</label>
+		   <validator validation="nonempty,exist" />
+	       </input>
+	   </group>
+	   <group style="layout: grid; layout-cols: 1; align: fill; hgrab: true;">
+	       <trigger class="checkbox" ref="replication/start-node" hint="Start all the nodes on target enterprise after replication completed">
+		   <label>Start node</label>
+	       </trigger>
+	       <trigger class="checkbox" ref="replication/start-sa" hint="Start all the service assemblies on target enterprise after replication completed">
+		   <label>Start service assembly</label>
+	       </trigger>
+	   </group>
+    </body>
+</xform>
